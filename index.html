@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <title>Пятов Никита · team lead</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="description" content="Пятов Никита — team lead / engineering manager. 10 лет в разработке." />
+<meta name="description" content="Пятов Никита — team lead / engineering manager. Нахожу главное. Берегу людей. Довожу дело до конца. 10 лет в разработке." />
 <meta name="color-scheme" content="dark" />
 
 <!-- Fonts: JetBrains Mono + Inter, Latin + Cyrillic subsets -->
@@ -104,12 +104,14 @@
   .out-m { color: var(--fg-3); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
 
   .h {
+    margin: 0;
     font-size: clamp(32px, 4.2vw, 56px);
     font-weight: 700; letter-spacing: -0.03em;
     text-transform: uppercase; line-height: 1.02;
     color: var(--fg-0);
   }
-  .h.acc { color: var(--accent); }
+  .h span { display: block; }
+  .h .acc { color: var(--accent); }
 
   .p {
     margin: 6px 0;
@@ -120,6 +122,7 @@
   .link-row { display: flex; gap: 14px; }
   .link-row .key { color: var(--fg-3); white-space: pre; }
   .link-row a {
+    min-width: 0; overflow-wrap: anywhere;
     color: var(--fg-0); text-decoration: none;
     border-bottom: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
     padding-bottom: 1px;
@@ -142,11 +145,12 @@
     box-shadow: 0 0 8px var(--accent);
   }
 
-  .cmdlive { display: flex; gap: 10px; color: var(--fg-0); margin-top: 6px; }
+  .cmdlive { display: flex; align-items: center; gap: 10px; color: var(--fg-0); margin-top: 6px; }
   .cmdlive .prompt { color: var(--accent); font-weight: 700; }
   .caret {
     display: inline-block; width: 0.55ch; height: 1em;
-    background: var(--accent); vertical-align: -0.15em;
+    background: var(--accent);
+    transform: translateY(1px); /* Optical alignment with the prompt glyph. */
     animation: blink 1.06s steps(1) infinite;
   }
   @keyframes blink { 50% { opacity: 0; } }
@@ -181,20 +185,22 @@
       <div class="gap"></div>
 
       <div class="cmd"><span class="prompt">❯</span><span>cat .manifesto</span></div>
-      <div class="h">ЗДРАВОМЫСЛИЕ</div>
-      <div class="h">ВО ВСЁМ</div>
-      <div class="h acc">ТАКОВ ПУТЬ.</div>
+      <h1 class="h">
+        <span>Нахожу главное.</span>
+        <span>Берегу людей.</span>
+        <span class="acc">Довожу дело до&nbsp;конца.</span>
+      </h1>
 
       <div class="gap"></div>
 
       <div class="cmd"><span class="prompt">❯</span><span>cat about.md</span></div>
-      <p class="p">я быстрый, когда нужно ускориться. медленный, когда нужно подумать. адаптивность и визионерство — не лозунг, а рабочий инструмент.</p>
-      <p class="p">собираю небольшие автономные команды. пишу код, защищаю календари, превращаю роадмэпы в то, что можно закончить к пятнице.</p>
+      <p class="p">разбираюсь в причинах, ставлю под вопрос привычные решения и выбираю то, что действительно важно. собираю самостоятельные команды вокруг ясной цели.</p>
+      <p class="p">берегу время и внимание людей. задаю высокую планку и помогаю её держать. для меня дело закончено, когда решение работает и приносит пользу тем, для кого его сделали.</p>
 
       <div class="gap"></div>
 
       <div class="cmd"><span class="prompt">❯</span><span>ls contacts/</span></div>
-      <div class="link-row"><span class="key">email    </span><a href="/cdn-cgi/l/email-protection#1c6c657d68736a72757775687d2d5c7b717d7570327f7371"><span class="__cf_email__" data-cfemail="23535a42574c554d4a484a57421263444e424a4f0d404c4e">[email&#160;protected]</span></a></div>
+      <div class="link-row"><span class="key">email    </span><a href="mailto:pyatovnikita1@gmail.com">pyatovnikita1@gmail.com</a></div>
       <div class="link-row"><span class="key">telegram </span><a href="https://t.me/nikitapyatov" target="_blank" rel="noreferrer">@nikitapyatov</a></div>
       <div class="link-row"><span class="key">linkedin </span><a href="https://www.linkedin.com/in/nikitapyatov" target="_blank" rel="noreferrer">/in/nikitapyatov</a></div>
 
@@ -209,5 +215,5 @@
   </section>
 </main>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</body>
 </html>
