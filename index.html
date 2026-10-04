@@ -7,8 +7,20 @@
 <meta name="description" content="Пятов Никита — team lead / engineering manager. Нахожу главное. Берегу людей. Довожу дело до конца. 10 лет в разработке." />
 <meta name="color-scheme" content="dark" />
 
-<!-- Fonts: JetBrains Mono + Inter, Latin + Cyrillic subsets -->
+<!-- Local fonts: Russo One for content, JetBrains Mono for terminal labels -->
 <style>
+  @font-face {
+    font-family: "Russo One";
+    src: url("system/fonts/RussoOne-cyrillic.woff2") format("woff2");
+    font-weight: 400; font-style: normal; font-display: swap;
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  }
+  @font-face {
+    font-family: "Russo One";
+    src: url("system/fonts/RussoOne-latin.woff2") format("woff2");
+    font-weight: 400; font-style: normal; font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
   @font-face {
     font-family: "NN Mono";
     src: url("system/fonts/JetBrainsMono-cyrillic.woff2") format("woff2");
@@ -21,18 +33,6 @@
     font-weight: 100 900; font-style: normal; font-display: swap;
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
   }
-  @font-face {
-    font-family: "NN Sans";
-    src: url("system/fonts/Inter-cyrillic.woff2") format("woff2");
-    font-weight: 100 900; font-style: normal; font-display: swap;
-    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-  }
-  @font-face {
-    font-family: "NN Sans";
-    src: url("system/fonts/Inter-latin.woff2") format("woff2");
-    font-weight: 100 900; font-style: normal; font-display: swap;
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-  }
 
   :root {
     --bg-0: #000000;
@@ -41,23 +41,24 @@
     --fg-0: #ffffff;
     --fg-1: #e8e8e8;
     --fg-2: #a0a0a0;
-    --fg-3: #6a6a6a;
+    --fg-3: #898989;
     --line-1: #1f1f1f;
     --line-2: #2e2e2e;
     --line-3: #404040;
     --accent: #b026ff;
 
-    --font-mono: "NN Mono", "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
-    --font-sans: "NN Sans", "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    --font-ui: "Russo One", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "NN Mono", "SFMono-Regular", Menlo, Consolas, monospace;
   }
 
   * { box-sizing: border-box; }
   html, body {
     margin: 0; padding: 0; background: var(--bg-0); color: var(--fg-1);
-    font-family: var(--font-sans);
+    font-family: var(--font-ui); font-weight: 400; font-synthesis: none;
     -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
   }
   ::selection { background: var(--accent); color: var(--bg-0); }
+  a:focus-visible { outline: 2px solid var(--fg-0); outline-offset: 5px; }
 
   /* Page */
   .page {
@@ -74,7 +75,6 @@
     border-radius: 4px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.6);
     overflow: hidden;
-    font-family: var(--font-mono);
   }
 
   /* Window chrome */
@@ -83,70 +83,131 @@
     padding: 10px 14px;
     background: var(--bg-2);
     border-bottom: 1px solid var(--line-2);
+    font-family: var(--font-mono);
   }
   .dots { display: flex; gap: 6px; }
   .dot { width: 10px; height: 10px; border-radius: 50%; background: #2e2e2e; border: 1px solid var(--line-3); }
   .dot.live { background: var(--accent); border-color: transparent; box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 66%, transparent); }
   .chrome-title {
-    font-size: 11px; color: var(--fg-3); letter-spacing: 0.14em; text-transform: uppercase;
+    font-size: 11px; color: var(--fg-3); letter-spacing: 0.06em;
   }
   .chrome-ver { font-size: 11px; color: var(--fg-3); }
 
   /* Body */
-  .body { padding: 22px 26px 26px; font-size: 14px; line-height: 1.65; color: var(--fg-1); }
+  .body { padding: 30px 32px 26px; font-size: 14px; line-height: 1.65; color: var(--fg-1); }
+  .hero { margin-top: 28px; }
+  .section { margin-top: 30px; }
 
-  .gap { height: 14px; }
+  .cmd {
+    display: flex; gap: 8px; align-items: baseline;
+    margin: 0 0 10px;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 400; line-height: 1.5;
+    color: var(--fg-3);
+  }
+  .cmd code { font: inherit; }
+  .cmd .prompt { color: var(--fg-3); }
 
-  .cmd { display: flex; gap: 10px; color: var(--fg-0); }
-  .cmd .prompt { color: var(--accent); font-weight: 700; }
-
-  .out { color: var(--fg-0); font-weight: 600; }
-  .out-m { color: var(--fg-3); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .out { margin: 0; color: var(--fg-0); font-size: 20px; line-height: 1.4; }
+  .out-m {
+    margin: 4px 0 0; font-family: var(--font-mono);
+    font-size: 12px; line-height: 1.7; color: var(--fg-2);
+  }
 
   .h {
     margin: 0;
-    font-size: clamp(32px, 4.2vw, 56px);
-    font-weight: 700; letter-spacing: -0.03em;
-    text-transform: uppercase; line-height: 1.02;
+    font-size: clamp(32px, 4.2vw, 54px);
+    font-weight: 400; letter-spacing: -0.015em;
+    text-transform: uppercase; line-height: 1.12;
     color: var(--fg-0);
   }
-  .h span { display: block; }
+  .h > span {
+    display: block; position: relative;
+    --glitch-delay: -6s;
+    animation: glitch-nudge 9s steps(1, end) infinite;
+    animation-delay: var(--glitch-delay);
+  }
+  .h > span:nth-child(2) { --glitch-delay: -5.85s; }
+  .h > span:nth-child(3) { --glitch-delay: -5.7s; }
   .h .acc { color: var(--accent); }
 
-  .p {
-    margin: 6px 0;
-    font-family: var(--font-sans);
-    font-size: 15px; color: var(--fg-1); line-height: 1.6; max-width: 640px;
+  /* Decorative copies follow the same wrapping as the readable heading. */
+  .glitch-echo {
+    position: absolute; inset: 0;
+    pointer-events: none; user-select: none;
+  }
+  .glitch-echo::before, .glitch-echo::after {
+    content: attr(data-text);
+    position: absolute; inset: 0;
+    background: var(--bg-1); opacity: 0;
+    animation: glitch-slice-top 9s steps(1, end) infinite;
+    animation-delay: var(--glitch-delay);
+  }
+  .glitch-echo::before { color: #d946ef; }
+  .glitch-echo::after { color: var(--fg-0); animation-name: glitch-slice-bottom; }
+
+  @keyframes glitch-nudge {
+    0%, 94%, 98%, 100% { transform: none; }
+    95% { transform: translateX(-1px); }
+    96% { transform: translateX(1px); }
+    97% { transform: none; }
+  }
+  @keyframes glitch-slice-top {
+    0%, 94%, 98%, 100% { opacity: 0; transform: none; }
+    95% { opacity: 0.9; clip-path: inset(12% 0 68% 0); transform: translateX(3px); }
+    96% { opacity: 0.8; clip-path: inset(38% 0 44% 0); transform: translateX(-3px); }
+    97% { opacity: 0.65; clip-path: inset(20% 0 65% 0); transform: translateX(2px); }
+  }
+  @keyframes glitch-slice-bottom {
+    0%, 94%, 98%, 100% { opacity: 0; transform: none; }
+    95% { opacity: 0.8; clip-path: inset(62% 0 18% 0); transform: translateX(-3px); }
+    96% { opacity: 0.9; clip-path: inset(78% 0 8% 0); transform: translateX(3px); }
+    97% { opacity: 0.6; clip-path: inset(52% 0 32% 0); transform: translateX(-2px); }
   }
 
-  .link-row { display: flex; gap: 14px; }
-  .link-row .key { color: var(--fg-3); white-space: pre; }
+  .p {
+    margin: 0;
+    font-size: 16px; color: #b8b8b8; line-height: 1.8;
+    letter-spacing: 0.01em; max-width: 620px;
+  }
+  .p + .p { margin-top: 14px; }
+  .p strong { font-weight: 400; color: var(--fg-0); }
+
+  .link-row { display: flex; gap: 14px; align-items: baseline; }
+  .link-row + .link-row { margin-top: 4px; }
+  .link-row .key {
+    flex: 0 0 5rem; color: var(--fg-3);
+    font-family: var(--font-mono); font-size: 12px; white-space: normal;
+  }
   .link-row a {
     min-width: 0; overflow-wrap: anywhere;
     color: var(--fg-0); text-decoration: none;
     border-bottom: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
-    padding-bottom: 1px;
+    padding: 7px 0 3px;
     transition: color .2s cubic-bezier(0.2,0.8,0.2,1), border-color .2s cubic-bezier(0.2,0.8,0.2,1);
   }
   .link-row a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
+  .status-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; }
+  .status-row .cmd { margin: 0; }
   .badge {
     display: inline-flex; align-items: center; gap: 8px;
-    margin-top: 4px; padding: 4px 10px;
-    border: 1px solid var(--accent);
-    background: color-mix(in srgb, var(--accent) 12%, transparent);
-    color: var(--accent);
-    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--line-2);
+    color: var(--fg-2);
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.04em; text-transform: uppercase;
     border-radius: 2px;
   }
   .badge .bdot {
     width: 6px; height: 6px; border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 8px var(--accent);
   }
 
-  .cmdlive { display: flex; align-items: center; gap: 10px; color: var(--fg-0); margin-top: 6px; }
-  .cmdlive .prompt { color: var(--accent); font-weight: 700; }
+  .cmdlive {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono); color: var(--fg-0); margin-top: 20px;
+  }
+  .cmdlive .prompt { color: var(--accent); }
   .caret {
     display: inline-block; width: 0.55ch; height: 1em;
     background: var(--accent);
@@ -155,14 +216,28 @@
   }
   @keyframes blink { 50% { opacity: 0; } }
 
+  @media (prefers-reduced-motion: reduce) {
+    .h > span, .glitch-echo::before, .glitch-echo::after, .caret { animation: none; }
+  }
+
   @media (max-width: 520px) {
     .page { padding: 20px 12px 40px; }
-    .body { padding: 18px 18px 22px; font-size: 13px; }
+    .body { padding: 24px 18px 22px; font-size: 14px; }
+    .hero { margin-top: 24px; }
+    .section { margin-top: 26px; }
     .chrome-title { display: none; }
   }
 </style>
+<link rel="stylesheet" href="system/matrix.css" />
+<link rel="stylesheet" href="system/robot.css" />
+<script src="system/matrix.js" defer></script>
+<script src="system/robot.js" defer></script>
 </head>
 <body>
+
+<div class="matrix-spotlight" id="matrix-spotlight" aria-hidden="true" hidden>
+  <canvas></canvas>
+</div>
 
 <main class="page">
   <section class="term" aria-label="Личная карточка — терминал">
@@ -178,42 +253,88 @@
 
     <div class="body">
 
-      <div class="cmd"><span class="prompt">❯</span><span>whoami</span></div>
-      <div class="out">Пятов Никита</div>
-      <div class="out-m">team lead · engineering manager · 10 лет</div>
+      <div class="identity">
+        <div class="cmd" aria-hidden="true"><span class="prompt">❯</span><code>whoami</code></div>
+        <p class="out">Пятов Никита</p>
+        <p class="out-m">team lead · engineering manager · 10 лет</p>
+      </div>
 
-      <div class="gap"></div>
+      <div class="hero">
+        <div class="cmd" aria-hidden="true"><span class="prompt">❯</span><code>cat .manifesto</code></div>
+        <h1 class="h">
+          <span>Нахожу главное.<span class="glitch-echo" aria-hidden="true" data-text="Нахожу главное."></span></span>
+          <span>Берегу людей.<span class="glitch-echo" aria-hidden="true" data-text="Берегу людей."></span></span>
+          <span class="acc">Довожу дело до&nbsp;конца.<span class="glitch-echo" aria-hidden="true" data-text="Довожу дело до&nbsp;конца."></span></span>
+        </h1>
+      </div>
 
-      <div class="cmd"><span class="prompt">❯</span><span>cat .manifesto</span></div>
-      <h1 class="h">
-        <span>Нахожу главное.</span>
-        <span>Берегу людей.</span>
-        <span class="acc">Довожу дело до&nbsp;конца.</span>
-      </h1>
+      <section class="section" id="about" aria-labelledby="about-heading">
+        <h2 class="cmd" id="about-heading" aria-label="Как я работаю"><span class="prompt" aria-hidden="true">❯</span><code>cat about.md</code></h2>
+        <p class="p">разбираюсь в причинах, ставлю под вопрос привычные решения и выбираю то, что действительно важно. собираю <strong>самостоятельные команды вокруг ясной цели.</strong></p>
+        <p class="p">берегу время и внимание людей. задаю высокую планку и помогаю её держать. для меня дело закончено, когда <strong>решение работает и приносит пользу</strong> тем, для кого его сделали.</p>
+      </section>
 
-      <div class="gap"></div>
+      <section class="section" aria-labelledby="contacts-heading">
+        <h2 class="cmd" id="contacts-heading" aria-label="Контакты"><span class="prompt" aria-hidden="true">❯</span><code>ls contacts/</code></h2>
+        <div class="link-row"><span class="key">email</span><a href="mailto:pyatovnikita1@gmail.com">pyatovnikita1@gmail.com</a></div>
+        <div class="link-row"><span class="key">telegram</span><a href="https://t.me/nikitapyatov" target="_blank" rel="noreferrer">@nikitapyatov</a></div>
+        <div class="link-row"><span class="key">linkedin</span><a href="https://www.linkedin.com/in/nikitapyatov" target="_blank" rel="noreferrer">/in/nikitapyatov</a></div>
+      </section>
 
-      <div class="cmd"><span class="prompt">❯</span><span>cat about.md</span></div>
-      <p class="p">разбираюсь в причинах, ставлю под вопрос привычные решения и выбираю то, что действительно важно. собираю самостоятельные команды вокруг ясной цели.</p>
-      <p class="p">берегу время и внимание людей. задаю высокую планку и помогаю её держать. для меня дело закончено, когда решение работает и приносит пользу тем, для кого его сделали.</p>
-
-      <div class="gap"></div>
-
-      <div class="cmd"><span class="prompt">❯</span><span>ls contacts/</span></div>
-      <div class="link-row"><span class="key">email    </span><a href="mailto:pyatovnikita1@gmail.com">pyatovnikita1@gmail.com</a></div>
-      <div class="link-row"><span class="key">telegram </span><a href="https://t.me/nikitapyatov" target="_blank" rel="noreferrer">@nikitapyatov</a></div>
-      <div class="link-row"><span class="key">linkedin </span><a href="https://www.linkedin.com/in/nikitapyatov" target="_blank" rel="noreferrer">/in/nikitapyatov</a></div>
-
-      <div class="gap"></div>
-
-      <div class="cmd"><span class="prompt">❯</span><span>status --now</span></div>
-      <div class="badge"><span class="bdot" aria-hidden="true"></span>ON AIR · Q2 2026 · MOSCOW</div>
-
-      <div class="cmdlive"><span class="prompt">❯</span><span class="caret" aria-hidden="true"></span></div>
+      <footer class="section">
+        <div class="status-row">
+          <div class="cmd" aria-hidden="true"><span class="prompt">❯</span><code>status --now</code></div>
+          <div class="badge"><span class="bdot" aria-hidden="true"></span>ON AIR · Q2 2026 · MOSCOW</div>
+        </div>
+        <div class="cmdlive" aria-hidden="true"><span class="prompt">❯</span><span class="caret"></span></div>
+      </footer>
 
     </div>
   </section>
 </main>
+
+<div class="robot-track" id="robot-track" hidden>
+  <button class="robot" id="terminal-robot" type="button" data-side="left" data-facing="right" aria-label="Робот. Перебежать в правый угол">
+    <span class="robot-facing">
+      <svg viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <ellipse class="robot-shadow" cx="32" cy="74" rx="18" ry="3" />
+        <g class="robot-rig">
+          <g class="robot-leg-left">
+            <path class="robot-limb" d="M26 59v10" />
+            <rect class="robot-foot" x="22" y="68" width="10" height="5" rx="2" />
+          </g>
+          <g class="robot-leg-right">
+            <path class="robot-limb" d="M38 59v10" />
+            <rect class="robot-foot" x="35" y="68" width="10" height="5" rx="2" />
+          </g>
+          <g class="robot-arm-left">
+            <path class="robot-limb" d="M20 45l-5 7 2 7" />
+            <circle class="robot-joint" cx="17" cy="59" r="3" />
+          </g>
+          <g class="robot-arm-right">
+            <path class="robot-limb" d="M44 45l5 7-1 7" />
+            <circle class="robot-joint" cx="48" cy="59" r="3" />
+          </g>
+          <rect class="robot-joint" x="27" y="37" width="10" height="8" rx="2" />
+          <rect class="robot-shell" x="21" y="42" width="23" height="19" rx="4" />
+          <rect class="robot-visor" x="26" y="46" width="13" height="10" rx="2" />
+          <path d="m28 49 2 2-2 2m5 0h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path class="robot-limb" d="M32 14V7" />
+          <circle class="robot-accent robot-signal" cx="32" cy="5" r="3" />
+          <rect class="robot-joint" x="12" y="23" width="6" height="10" rx="2" />
+          <rect class="robot-joint" x="46" y="23" width="6" height="10" rx="2" />
+          <rect class="robot-shell" x="16" y="14" width="32" height="25" rx="6" />
+          <path d="M23 17h18" fill="none" stroke="#d4d4dd" stroke-opacity=".4" stroke-linecap="round" />
+          <rect class="robot-visor" x="20" y="21" width="24" height="12" rx="3" />
+          <g class="robot-eyes robot-accent">
+            <rect x="24" y="24" width="5" height="5" rx="1" />
+            <rect x="35" y="24" width="5" height="5" rx="1" />
+          </g>
+        </g>
+      </svg>
+    </span>
+  </button>
+</div>
 
 </body>
 </html>

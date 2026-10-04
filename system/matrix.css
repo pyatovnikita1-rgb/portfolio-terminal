@@ -1,0 +1,13 @@
+/* Between the terminal's background and its readable content. */
+.matrix-spotlight {
+  position: fixed; inset: 0; z-index: 1;
+  overflow: hidden; pointer-events: none;
+  opacity: 0; transition: opacity 180ms ease-out;
+}
+.matrix-spotlight.is-visible { opacity: 1; }
+.matrix-spotlight canvas { position: absolute; top: 0; left: 0; }
+.chrome, .body { position: relative; z-index: 2; }
+
+@media (prefers-reduced-motion: reduce) {
+  .matrix-spotlight { transition: none; }
+}

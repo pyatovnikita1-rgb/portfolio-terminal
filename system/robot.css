@@ -1,0 +1,86 @@
+/* A small, local SVG companion. Only the robot itself captures pointer input. */
+.robot-track {
+  --robot-size: 64px;
+  position: fixed;
+  left: max(12px, env(safe-area-inset-left));
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(10px, env(safe-area-inset-bottom));
+  height: calc(var(--robot-size) * 1.25);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.robot {
+  position: absolute; left: 0; bottom: 0;
+  width: var(--robot-size); height: 100%;
+  padding: 0; border: 0; border-radius: 8px;
+  background: transparent; color: var(--accent);
+  appearance: none; cursor: pointer;
+  pointer-events: auto; touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.robot[data-side="right"] { left: calc(100% - var(--robot-size)); }
+.robot.is-running { transition: left var(--run-duration) linear; cursor: default; }
+.robot:focus-visible { outline: 2px solid var(--fg-0); outline-offset: 3px; }
+.robot-facing { display: block; width: 100%; height: 100%; }
+.robot[data-facing="left"] .robot-facing { transform: scaleX(-1); }
+.robot svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+.robot-shell { fill: #303039; stroke: #90909e; stroke-width: 1.5; }
+.robot-joint { fill: #555560; }
+.robot-visor { fill: #08080c; stroke: #50505e; stroke-width: 1; }
+.robot-accent { fill: currentColor; }
+.robot-limb { fill: none; stroke: #92929e; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.robot-foot { fill: #d4d4dd; }
+.robot-shadow { fill: #a0a0b8; opacity: 0.16; }
+.robot-rig { animation: robot-idle 3.6s ease-in-out infinite; }
+.robot-eyes { transform-box: fill-box; transform-origin: center; animation: robot-blink 5.8s infinite; }
+.robot-signal { animation: robot-signal 4s ease-in-out infinite; }
+.robot-arm-left { transform-origin: 20px 45px; }
+.robot-arm-right { transform-origin: 44px 45px; animation: robot-wave 9s ease-in-out infinite; }
+.robot-leg-left { transform-origin: 26px 59px; }
+.robot-leg-right { transform-origin: 38px 59px; }
+.robot:hover .robot-visor, .robot:focus-visible .robot-visor { stroke: currentColor; }
+
+.robot.is-running .robot-rig { animation: robot-bounce 180ms ease-in-out infinite alternate; }
+.robot.is-running .robot-arm-left,
+.robot.is-running .robot-leg-right { animation: robot-stride 180ms ease-in-out infinite alternate; }
+.robot.is-running .robot-arm-right,
+.robot.is-running .robot-leg-left { animation: robot-stride 180ms ease-in-out infinite alternate-reverse; }
+
+@keyframes robot-idle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.5px); }
+}
+@keyframes robot-blink {
+  0%, 90%, 96%, 100% { transform: scaleY(1); }
+  92%, 94% { transform: scaleY(0.12); }
+}
+@keyframes robot-signal {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@keyframes robot-wave {
+  0%, 78%, 100% { transform: rotate(0); }
+  82%, 90% { transform: rotate(-110deg); }
+  86%, 94% { transform: rotate(-140deg); }
+}
+@keyframes robot-bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-2px); }
+}
+@keyframes robot-stride {
+  from { transform: rotate(-24deg); }
+  to { transform: rotate(24deg); }
+}
+
+/* Keep the final lines above the robot when the page is scrolled to the bottom. */
+.page { padding-bottom: calc(108px + env(safe-area-inset-bottom)); }
+
+@media (max-width: 520px) {
+  .robot-track { --robot-size: 56px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .robot.is-running { transition: none; }
+  .robot svg * { animation: none !important; }
+}
