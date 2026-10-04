@@ -7,17 +7,26 @@
   let running = false;
   let finishTimer;
 
+  function updateLabel() {
+    const nextSide = running ? robot.dataset.side : robot.dataset.side === 'left' ? 'right' : 'left';
+    if (document.documentElement.lang === 'en') {
+      robot.setAttribute('aria-label', `Robot. Run to the ${nextSide} corner`);
+      robot.title = `Click — I'll run to the ${nextSide} corner`;
+    } else {
+      const nextCorner = nextSide === 'right' ? 'правый' : 'левый';
+      robot.setAttribute('aria-label', `Робот. Перебежать в ${nextCorner} угол`);
+      robot.title = `Нажми — побегу в ${nextCorner} угол`;
+    }
+  }
+
   function settle() {
     window.clearTimeout(finishTimer);
     running = false;
     robot.classList.remove('is-running');
     robot.removeAttribute('aria-disabled');
 
-    const nextSide = robot.dataset.side === 'left' ? 'right' : 'left';
-    const nextCorner = nextSide === 'right' ? 'правый' : 'левый';
-    robot.dataset.facing = nextSide;
-    robot.setAttribute('aria-label', `Робот. Перебежать в ${nextCorner} угол`);
-    robot.title = `Нажми — побегу в ${nextCorner} угол`;
+    robot.dataset.facing = robot.dataset.side === 'left' ? 'right' : 'left';
+    updateLabel();
   }
 
   robot.addEventListener('click', () => {
@@ -39,6 +48,7 @@
     robot.classList.add('is-running');
     robot.setAttribute('aria-disabled', 'true');
     robot.dataset.side = nextSide;
+    updateLabel();
 
     // Also finish when a browser suppresses transition events in a hidden tab.
     finishTimer = window.setTimeout(settle, duration + 120);
@@ -52,6 +62,7 @@
   });
   window.addEventListener('resize', settle);
   reducedMotion.addEventListener('change', settle);
+  document.addEventListener('portfolio:languagechange', updateLabel);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) settle();
   });

@@ -92,6 +92,19 @@
     font-size: 11px; color: var(--fg-3); letter-spacing: 0.06em;
   }
   .chrome-ver { font-size: 11px; color: var(--fg-3); }
+  .chrome-tools { display: flex; align-items: center; gap: 14px; }
+  .language-toggle {
+    align-items: center; gap: 6px;
+    min-height: 32px; padding: 5px 9px;
+    border: 1px solid var(--line-2); border-radius: 2px;
+    background: transparent; color: var(--fg-3);
+    font: 11px var(--font-mono); cursor: pointer;
+  }
+  .language-toggle:not([hidden]) { display: inline-flex; }
+  .language-toggle:hover { border-color: var(--accent); }
+  .language-toggle:focus-visible { outline: 2px solid var(--fg-0); outline-offset: 3px; }
+  html[lang="ru"] .language-toggle [lang="ru"],
+  html[lang="en"] .language-toggle [lang="en"] { color: var(--fg-0); }
 
   /* Body */
   .body { padding: 30px 32px 26px; font-size: 14px; line-height: 1.65; color: var(--fg-1); }
@@ -230,6 +243,7 @@
 </style>
 <link rel="stylesheet" href="system/matrix.css" />
 <link rel="stylesheet" href="system/robot.css" />
+<script src="system/i18n.js" defer></script>
 <script src="system/matrix.js" defer></script>
 <script src="system/robot.js" defer></script>
 </head>
@@ -240,7 +254,7 @@
 </div>
 
 <main class="page">
-  <section class="term" aria-label="Личная карточка — терминал">
+  <section class="term" aria-label="Личная карточка — терминал" data-i18n-label="terminalLabel">
     <header class="chrome">
       <div class="dots">
         <span class="dot" aria-hidden="true"></span>
@@ -248,34 +262,39 @@
         <span class="dot live" aria-hidden="true"></span>
       </div>
       <div class="chrome-title">nikita@noir — zsh — 80×24</div>
-      <div class="chrome-ver">v1.0</div>
+      <div class="chrome-tools">
+        <span class="chrome-ver">v1.0</span>
+        <button class="language-toggle" id="language-toggle" type="button" lang="en" aria-label="Switch to English" title="Switch to English" hidden>
+          <span lang="ru">RU</span><span aria-hidden="true">/</span><span lang="en">EN</span>
+        </button>
+      </div>
     </header>
 
     <div class="body">
 
       <div class="identity">
         <div class="cmd" aria-hidden="true"><span class="prompt">❯</span><code>whoami</code></div>
-        <p class="out">Пятов Никита</p>
-        <p class="out-m">team lead · engineering manager · 10 лет</p>
+        <p class="out" data-i18n="name">Пятов Никита</p>
+        <p class="out-m" data-i18n="role">team lead · engineering manager · 10 лет</p>
       </div>
 
       <div class="hero">
         <div class="cmd" aria-hidden="true"><span class="prompt">❯</span><code>cat .manifesto</code></div>
         <h1 class="h">
-          <span>Нахожу главное.<span class="glitch-echo" aria-hidden="true" data-text="Нахожу главное."></span></span>
-          <span>Берегу людей.<span class="glitch-echo" aria-hidden="true" data-text="Берегу людей."></span></span>
-          <span class="acc">Довожу дело до&nbsp;конца.<span class="glitch-echo" aria-hidden="true" data-text="Довожу дело до&nbsp;конца."></span></span>
+          <span><span data-i18n="manifestoFocus">Нахожу главное.</span><span class="glitch-echo" aria-hidden="true" data-i18n-glitch="manifestoFocus" data-text="Нахожу главное."></span></span>
+          <span><span data-i18n="manifestoPeople">Берегу людей.</span><span class="glitch-echo" aria-hidden="true" data-i18n-glitch="manifestoPeople" data-text="Берегу людей."></span></span>
+          <span class="acc"><span data-i18n="manifestoFinish">Довожу дело до&nbsp;конца.</span><span class="glitch-echo" aria-hidden="true" data-i18n-glitch="manifestoFinish" data-text="Довожу дело до&nbsp;конца."></span></span>
         </h1>
       </div>
 
       <section class="section" id="about" aria-labelledby="about-heading">
-        <h2 class="cmd" id="about-heading" aria-label="Как я работаю"><span class="prompt" aria-hidden="true">❯</span><code>cat about.md</code></h2>
-        <p class="p">разбираюсь в причинах, ставлю под вопрос привычные решения и выбираю то, что действительно важно. собираю <strong>самостоятельные команды вокруг ясной цели.</strong></p>
-        <p class="p">берегу время и внимание людей. задаю высокую планку и помогаю её держать. для меня дело закончено, когда <strong>решение работает и приносит пользу</strong> тем, для кого его сделали.</p>
+        <h2 class="cmd" id="about-heading" aria-label="Как я работаю" data-i18n-label="aboutLabel"><span class="prompt" aria-hidden="true">❯</span><code>cat about.md</code></h2>
+        <p class="p"><span data-i18n="aboutIntro">разбираюсь в причинах, ставлю под вопрос привычные решения и выбираю то, что действительно важно. собираю </span><strong data-i18n="aboutTeam">самостоятельные команды вокруг ясной цели.</strong></p>
+        <p class="p"><span data-i18n="aboutStandards">берегу время и внимание людей. задаю высокую планку и помогаю её держать. для меня дело закончено, когда </span><strong data-i18n="aboutResult">решение работает и приносит пользу</strong><span data-i18n="aboutBeneficiaries"> тем, для кого его сделали.</span></p>
       </section>
 
       <section class="section" aria-labelledby="contacts-heading">
-        <h2 class="cmd" id="contacts-heading" aria-label="Контакты"><span class="prompt" aria-hidden="true">❯</span><code>ls contacts/</code></h2>
+        <h2 class="cmd" id="contacts-heading" aria-label="Контакты" data-i18n-label="contactsLabel"><span class="prompt" aria-hidden="true">❯</span><code>ls contacts/</code></h2>
         <div class="link-row"><span class="key">email</span><a href="mailto:pyatovnikita1@gmail.com">pyatovnikita1@gmail.com</a></div>
         <div class="link-row"><span class="key">telegram</span><a href="https://t.me/nikitapyatov" target="_blank" rel="noreferrer">@nikitapyatov</a></div>
         <div class="link-row"><span class="key">linkedin</span><a href="https://www.linkedin.com/in/nikitapyatov" target="_blank" rel="noreferrer">/in/nikitapyatov</a></div>

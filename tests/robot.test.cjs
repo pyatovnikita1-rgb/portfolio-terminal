@@ -22,7 +22,7 @@ function eventSource(properties = {}) {
   };
 }
 
-function setup({ reduced = false, width = 1000, missing = false } = {}) {
+function setup({ reduced = false, width = 1000, missing = false, language = 'ru' } = {}) {
   const attributes = new Map();
   const classes = new Set();
   const timers = new Map();
@@ -39,6 +39,7 @@ function setup({ reduced = false, width = 1000, missing = false } = {}) {
   const motion = eventSource({ matches: reduced });
   const document = eventSource({
     hidden: false,
+    documentElement: { lang: language },
     getElementById: id => missing ? null : id === 'robot-track' ? track : robot,
   });
   const window = eventSource({
@@ -154,4 +155,31 @@ test('fallback completion remains bounded on small and large screens', () => {
 
 test('pages without the robot do not throw', () => {
   assert.doesNotThrow(() => setup({ missing: true }));
+});
+
+test('English labels follow the destination in both directions', () => {
+  const app = setup({ language: 'en' });
+  assert.match(app.attributes.get('aria-label'), /right corner/);
+  app.click();
+  app.arrive();
+  assert.match(app.attributes.get('aria-label'), /left corner/);
+  assert.match(app.robot.title, /left corner/);
+  app.click();
+  app.arrive();
+  assert.match(app.attributes.get('aria-label'), /right corner/);
+});
+
+test('language switches update the robot without interrupting its run', () => {
+  const app = setup();
+  app.click();
+  app.document.documentElement.lang = 'en';
+  app.document.emit('portfolio:languagechange');
+  assert.match(app.attributes.get('aria-label'), /right corner/);
+  assert.equal(app.classes.has('is-running'), true);
+  assert.equal(app.timers.size, 1);
+  app.arrive();
+  assert.match(app.attributes.get('aria-label'), /left corner/);
+  app.document.documentElement.lang = 'ru';
+  app.document.emit('portfolio:languagechange');
+  assert.match(app.attributes.get('aria-label'), /левый/);
 });
